@@ -17,8 +17,9 @@ PORT = 5111
 
 # elasticsearch settings
 ELASTIC_SEARCH_HOST = "http://127.0.0.1:9200" # remember the http:// or https://
-ELASTIC_SEARCH_DB = "oabutton"
-INITIALISE_INDEX = False # whether or not to try creating the index and required index types on startup
+ELASTIC_SEARCH_DB = "trustoa" # but the account model overwrites so that it shares the oabutton index accounts
+INDEX_VERSION = 0 # 0 or 1 to indicate ES version less than 1 or greater than 1
+INITIALISE_INDEX = True # whether or not to try creating the index and required index types on startup
 
 # list of superuser account names
 SUPER_USER = ["test"]
@@ -37,8 +38,8 @@ PUBLIC_ACCESSIBLE_JSON = True
 # and identifier for how non-analyzed fields for faceting are differentiated in the mappings
 FACET_FIELD = ".exact"
 MAPPINGS = {
-    "record" : {
-        "record" : {
+    "pages" : {
+        "pages" : {
             "properties": {
                 "created_date": {
                     "type": "date",
@@ -96,11 +97,6 @@ MAPPINGS = {
         }
     }
 }
-MAPPINGS['account'] = {'account':MAPPINGS['record']['record']}
-MAPPINGS['blocked'] = {'blocked':MAPPINGS['record']['record']}
-MAPPINGS['wishlist'] = {'wishlist':MAPPINGS['record']['record']}
-MAPPINGS['pages'] = {'pages':MAPPINGS['record']['record']}
-MAPPINGS['catalogue'] = {'catalogue':MAPPINGS['record']['record']}
 
 
 # ========================
@@ -125,4 +121,30 @@ DEFAULT_SORT = {
 }
 
 
+
+
+# ========================
+# MEDIA SETTINGS
+
+# location of media storage folder
+MEDIA_FOLDER = "media"
+
+
+# ========================
+# PAGEMANAGER SETTINGS
+
+# folder name for storing page content
+# will be added under the templates/pagemanager route
+CONTENT_FOLDER = "content"
+
+# etherpad endpoint if available for collaborative editing
+COLLABORATIVE = 'https://cottagelabs.com/sp'
+
+# when a page is deleted from the index should it also be removed from 
+# filesystem and etherpad (if they are available in the first place)
+DELETE_REMOVES_FS = False # True / False
+DELETE_REMOVES_EP = False # MUST BE THE ETHERPAD API-KEY OR DELETES WILL FAIL
+
+# disqus account shortname if available for page comments
+COMMENTS = ''
 

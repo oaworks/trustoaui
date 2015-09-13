@@ -10,7 +10,8 @@ setup(
         "Flask-WTF==0.9.3",
         "WTForms==1.0.5",
         "Werkzeug==0.9.6",
-        "requests==2.1.0"
+        "requests==2.1.0",
+        "markdown"
     ],
     url = 'http://cottagelabs.com',
     author = 'Cottage Labs',
