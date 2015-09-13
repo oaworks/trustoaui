@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    {% if current_user.id == account.id or current_user.is_super %}
+
+    <div class="row">
+        <div class="col-md-4" style="border-right:1px solid #c8c8c8;">
+            <h2>{{ account.id }}</h2>
+
+            <form action="" method="POST">
+            <p>
+            <select id="id_profession" name="profession" class="form-control" style="margin-bottom:3px;">
+                <option value="Student" 
+                {% if account.data.profession == "Student" %}selected="selected"{% endif %}
+                >Student</option>
+                <option value="Doctor"
+                {% if account.data.profession == "Doctor" %}selected="selected"{% endif %}
+                >Doctor</option>
+                <option value="Patient"
+                {% if account.data.profession == "Patient" %}selected="selected"{% endif %}
+                >Patient</option>
+                <option value="Advocate"
+                {% if account.data.profession == "Advocate" %}selected="selected"{% endif %}
+                >Advocate</option>
+                <option value="Academic"
+                {% if account.data.profession == "Academic" %}selected="selected"{% endif %}
+                >Academic</option>
+                <option value="Researcher"
+                {% if account.data.profession == "Researcher" %}selected="selected"{% endif %}
+                >Researcher</option>
+                <option value="Librarian"
+                {% if account.data.profession == "Librarian" %}selected="selected"{% endif %}
+                >Librarian</option>
+                <option value="Other"
+                {% if account.data.profession == "Other" %}selected="selected"{% endif %}
+                >Other</option>
+                <option value="Undisclosed"
+                {% if account.data.profession == "Undisclosed" %}selected="selected"{% endif %}
+                >Prefer not to say</option>
+            </select>
+            <input name="password" type="text" class="form-control" placeholder="change your password" style="margin-bottom:3px;">
+            <input class="btn btn-action btn-block" type="submit" value="update your account">
+            </p>
+
+            </form>
+            
+            <p>Your API key is:<br>
+            <pre><code>{{account.data['api_key']}}</code></pre></p>
+                    
+            <hr>
+            
+            <p><a href="#" id="delete" class="btn btn-danger btn-xs btn-block">Delete your account - cannot be undone!</a></p>
+        </div>
+        
+        <div class="col-md-8">
+            <h1>
+                Thanks for signing up!
+            </h1>
+            <p>
+                Download your Trust OA app now and install it in your web browser to start using it
+            </p>
+            
+            <div class="jumbotron">
+                <p>
+                    COMING SOON - THE LINKS TO THE BROWSER APPS...
+                </p>                
+            </div>
+            
+            <p>
+                By the way your account for this app is also an <a target="_blank" href="https://openaccessbutton.org">Open Access Button</a> account! Check it out too if you want 
+                to do more to advocate for open access to research.
+            </p>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ account.id }}</h2>
+            <p>You are not logged in as this user. Use the <a href="/account/login">login page</a> if you want to change this</p>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+jQuery(document).ready(function() {
+
+    var deleteme = function(event) {
+        event.preventDefault();
+        var conf = confirm("Are you sure you want to delete your account? All your details and your wishlist will be permanently removed. :(");
+        if ( conf ) {
+            $.ajax({
+                'url': window.location,
+                'method': 'DELETE'
+            });
+            window.location = '/';
+        }
+    }
+    $('#delete').bind('click',deleteme);
+})
+</script>
+
+{% endblock %}
+
